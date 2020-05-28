@@ -7,30 +7,25 @@ import string, secrets
 
 def generateShortUrl(linklength=5):
 
-    return ''.join(secrets.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for i in range(linklength)) 
+    shortURL =  ''.join(secrets.choice(string.digits + string.ascii_lowercase) for i in range(linklength)) 
 
 
+    
+
+    while(Link.objects.filter(shorturl=shortURL).exists()):
+        shortURL = ''.join(secrets.choice(string.digits + string.ascii_lowercase) for i in range(linklength))
+
+    return shortURL
+
+    super().save(*args, **kwargs)
 class Link(models.Model):
-    shorturl = models.CharField(max_length=100, null=True, blank=True)
+    shorturl = models.CharField(max_length=100, null=True, blank=True, default=generateShortUrl)
     longurl = models.TextField(blank=False)
     user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
-
+    clickcount = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.shorturl
     
-    def save(self, *args, **kwargs):
-        
-        shortURL = generateShortUrl()
-
-        while(Link.objects.filter(shorturl=shortURL).exists()):
-            shortURL = generateShortUrl()
-
-        self.shorturl = generateShortUrl()
-
-        super().save(*args, **kwargs)
 
 
-class ClickCount(models.Model):
-    link = models.ForeignKey(Link, on_delete=models.PROTECT, null=True, blank=True)
-    clickcount = models.PositiveIntegerField(default=0)
-    
+
