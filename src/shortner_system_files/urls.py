@@ -1,14 +1,16 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
-    # path('', include('landingpage.urls')),
-    path('admin/', admin.site.urls), # The admin route
-    # path('users/',  include('user_management.urls'))
     path('', include('shortnerlogic.urls')),
+
+    # path('', include('landingpage.urls')),
+    # path('admin/', admin.site.urls), # The admin route
+    # path('users/',  include('user_management.urls'))
 
 ]
 

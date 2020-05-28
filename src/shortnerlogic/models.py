@@ -30,4 +30,7 @@ class Link(models.Model):
         super().save(*args, **kwargs)
 
 
+class ClickCount(models.Model):
+    link = models.ForeignKey(Link, on_delete=models.PROTECT, null=True, blank=True)
+    clickcount = models.PositiveIntegerField(default=0)
     
