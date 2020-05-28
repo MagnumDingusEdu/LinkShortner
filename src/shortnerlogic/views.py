@@ -7,10 +7,6 @@ from .models import Link
 # Create your views here.
 
 
-def notFound404View(request):
-    return HttpResponse(request.path)
-
-
 
 def redirectHandler(request):
     pathargument = request.path[1:]
