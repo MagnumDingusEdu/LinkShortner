@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'formtools',  # https://django-formtools.readthedocs.io/en/latest/
     # 'localflavour',  # https://django-localflavor.readthedocs.io/en/latest /
     'django_extensions',  # https://django-extensions.readthedocs.io/en/latest/index.html
-    'shortnerlogic.apps.ShortnerlogicConfig'
+    'shortnerlogic.apps.ShortnerlogicConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -39,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ratelimit.middleware.RatelimitMiddleware',
 ]
 
 ROOT_URLCONF = 'shortner_system_files.urls'
@@ -110,3 +112,5 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default='')
 
 # RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY", default='')
 # RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY", default='')
+
+RATELIMIT_VIEW  = "shortnerlogic.views.ratelimitedView"

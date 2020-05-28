@@ -5,11 +5,17 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from .models import Link
 from django.views.decorators.csrf import csrf_exempt
+from ratelimit.decorators import ratelimit
 # Create your views here.
 
 
-
+@ratelimit(key='ip', rate='10/m', block=False)
 def redirectHandler(request):
+    was_limited = getattr(request, 'limited', False)
+    print(was_limited)
+    if was_limited:
+        messages.info(request, "You've made too many requests in a short time period. Please try again later.")
+        return render(request, 'shortnerlogic/index.html', {}, status=403)
     pathargument = request.path[1:]
     
     if pathargument == "":
@@ -44,7 +50,7 @@ def redirectHandler(request):
         messages.info(request, "This path was not found")
         return render(request, 'shortnerlogic/index.html')
 
-
+@ratelimit(key='ip', rate='10/m', block=True)
 @csrf_exempt
 def generatorAPI(request):
 
@@ -68,3 +74,8 @@ def generatorAPI(request):
         
     else:
         return JsonResponse({"status_code":400,"shorturl":None, "message":"Invalid request"})
+
+
+
+def ratelimitedView(request, exception):
+    return JsonResponse({"status_code":403, "shorturl":None, "message":"You have made too many requests in a short time period. Try again later."}, status=403)
