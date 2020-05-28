@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse,  JsonResponse
 from django.contrib import messages
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from .models import Link
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -29,13 +30,41 @@ def redirectHandler(request):
                 except ValidationError:
                     messages.info(request, 'This URL is invalid.')
             return render(request, 'shortnerlogic/index.html', {'oldurl':longurl})
+        else:
+            messages.info(request, 'Invalid request')
+            return render(request, 'shortnerlogic/index.html')
     elif Link.objects.filter(shorturl=pathargument).exists():
         thelinkobject = Link.objects.get(shorturl=pathargument)
         thelinkobject.clickcount += 1
         thelinkobject.save()
         return redirect(thelinkobject.longurl)
+
+
     else:
         messages.info(request, "This path was not found")
         return render(request, 'shortnerlogic/index.html')
 
 
+@csrf_exempt
+def generatorAPI(request):
+
+    if request.method == "GET":
+        return JsonResponse({"status_code":400, "shorturl":None,"message":"GET request not allowed on this endpoint. Read the docs at https://github.com/MagnumDingusEdu/LinkShortner"})
+    elif request.method == "POST":
+        longurl = request.POST.get('url',False)
+
+        if longurl:
+            validate = URLValidator()
+            try:
+                validate(longurl)
+                generatedlink = Link.objects.create(
+                    longurl = longurl
+                )
+                return JsonResponse({"status_code":200,"shorturl":"https://ln-k.cf/"+generatedlink.shorturl, "message":"Short URL Created Successfully !"})
+            except ValidationError:
+                return JsonResponse({"status_code":400,"shorturl":None, "message":"Invalid url"})
+        else:
+            return JsonResponse({"status_code":400,"shorturl":None, "message":"url parameter missing"})
+        
+    else:
+        return JsonResponse({"status_code":400,"shorturl":None, "message":"Invalid request"})
