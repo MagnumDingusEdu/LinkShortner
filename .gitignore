@@ -153,3 +153,4 @@ src/media/*
 db.sqlite3
 
 docs/public/
+src/static

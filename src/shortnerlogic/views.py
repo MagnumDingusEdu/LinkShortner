@@ -12,7 +12,6 @@ from ratelimit.decorators import ratelimit
 @ratelimit(key='ip', rate='10/m', block=False)
 def redirectHandler(request):
     was_limited = getattr(request, 'limited', False)
-    print(was_limited)
     if was_limited:
         messages.info(request, "You've made too many requests in a short time period. Please try again later.")
         return render(request, 'shortnerlogic/index.html', {}, status=403)
