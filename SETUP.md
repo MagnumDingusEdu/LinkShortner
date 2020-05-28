@@ -3,10 +3,6 @@
 
 * Clone this repository.
 
-```bash
-git clone https://github.com/MagnumDingusEdu/django-templating-boilerplate
-```
-
 
 * Set up your virtual environment
 
@@ -58,8 +54,6 @@ python manage.py makemigrations
 python manage.py migrate
 
 
-# Change the name of the project from boilerplate to something of your choice
-python manage.py renameproject <oldname> <newname>
 ```
 
 * Run the debug server

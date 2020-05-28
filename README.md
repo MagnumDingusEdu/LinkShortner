@@ -1,8 +1,28 @@
-# Django Boilerplate Templating
+# [Ln-K](https://ln-k.cf) - A minimalist link shortner
 
-![Boilerplate Deployment](https://github.com/EngineerLogbook/django-boilerplate-template/workflows/Boilerplate%20Deployment/badge.svg)
-![Docs](https://github.com/EngineerLogbook/django-boilerplate-template/workflows/Docs/badge.svg)
+A simple no-frills link shortner, made using the django web framework. Visit [Ln-k.cf](https://ln-k.cf/) to test it out now !
 
-A base repository for _most_ django projects, Hackathons and stuff cause re-making a basic setup is always a pain.
 
-And as a basic rule to coding if you find yourself rewriting it is to automate it.
+## API 
+
+In order to generate a short url, send a POST request to `https://ln-k.cf/api` with the `url` parameter.
+
+CURL
+```bash
+$ curl "https://ln-k.cf/api/" -d "url=https://google.com"
+
+{"status_code": 200, "shorturl": "https://ln-k.cf/bndrc", "message": "Short URL Created Successfully !"}
+```
+
+Python
+```python
+import requests
+
+longurl = "https://google.com"
+r = requests.post("http://ln-k.cf/api/", data={"url":longurl})
+
+shorturl = r.json()['shorturl']
+print(shorturl)
+```
+
+
