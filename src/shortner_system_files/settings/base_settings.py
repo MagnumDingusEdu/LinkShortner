@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'crispy_forms',  # https://django-crispy-forms.readthedocs.io/en/latest/
     'formtools',  # https://django-formtools.readthedocs.io/en/latest/
     # 'localflavour',  # https://django-localflavor.readthedocs.io/en/latest /
-    'django_extensions'  # https://django-extensions.readthedocs.io/en/latest/index.html
+    'django_extensions',  # https://django-extensions.readthedocs.io/en/latest/index.html
+    'shortnerlogic.apps.ShortnerlogicConfig'
 ]
 
 MIDDLEWARE = [
@@ -40,7 +41,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'boilerplate.urls'
+ROOT_URLCONF = 'shortner_system_files.urls'
 
 TEMPLATES = [
     {
@@ -58,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'boilerplate.wsgi.application'
+WSGI_APPLICATION = 'shortner_system_files.wsgi.application'
 
 
 AUTH_PASSWORD_VALIDATORS = [

@@ -5,9 +5,11 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('', include('landingpage.urls')),
+    # path('', include('landingpage.urls')),
     path('admin/', admin.site.urls), # The admin route
-    path('users/',  include('user_management.urls'))
+    # path('users/',  include('user_management.urls'))
+    path('', include('shortnerlogic.urls')),
+
 ]
 
 
