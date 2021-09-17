@@ -14,7 +14,7 @@ django-formtools==2.2
 django-ratelimit==2.0.0
 djecrety==1.0.13
 kombu==3.0.37
-Pillow==7.1.2
+Pillow==8.3.2
 pycodestyle==2.6.0
 python-decouple==3.3
 pytz==2020.1
